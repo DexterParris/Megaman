@@ -10,9 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject prefab;
 
 
-    const string player_idle = "Idle";
-    const string player_run = "Run";
-    const string player_fall = "Falling";
+    const string PLAYER_IDLE = "Idle";
+    const string PLAYER_RUN = "Run";
+    const string PLAYER_FALL = "Falling";
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,10 @@ public class PlayerMovement : MonoBehaviour
     {
         DoJump();
         DoMove();
-
+        if (Helper.IsGrounded == false)
+        {
+            anim.Play(PLAYER_FALL);
+        }
     }
 
     void DoJump()
@@ -45,9 +48,7 @@ public class PlayerMovement : MonoBehaviour
             
             if (Helper.IsGrounded == true)
             {
-                Helper.IsGrounded = false;
                 Helper.SetVelocity(gameObject, 0, 7);
-                anim.Play(player_fall);
             }
         }
     }
@@ -64,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             Helper.SetVelocity(gameObject, -4, 0);
             if (Helper.IsGrounded == true)
             {
-                anim.Play(player_run);
+                anim.Play(PLAYER_RUN);
             }
         }
         else if (Input.GetKey("d"))
@@ -73,12 +74,12 @@ public class PlayerMovement : MonoBehaviour
             Helper.SetVelocity(gameObject, 4, 0);
             if (Helper.IsGrounded == true)
             {
-                anim.Play(player_run);
+                anim.Play(PLAYER_RUN);
             }
         }
         else if (Helper.IsGrounded == true)
         {
-            anim.Play(player_idle);
+            anim.Play(PLAYER_IDLE);
         }
 
     }
